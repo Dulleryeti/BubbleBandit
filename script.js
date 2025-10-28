@@ -13,6 +13,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // Form submission handler
+const SUCCESS_MESSAGE_DURATION = 5000; // 5 seconds
+
 document.getElementById('bookingForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
@@ -26,18 +28,19 @@ document.getElementById('bookingForm').addEventListener('submit', function(e) {
     // Create and display success message
     const form = this;
     const successMessage = document.createElement('div');
-    successMessage.style.cssText = 'background: #27ae60; color: white; padding: 1rem; border-radius: 5px; margin-top: 1rem; text-align: center;';
+    successMessage.className = 'success-message';
     successMessage.textContent = `Thank you for your booking request, ${data.name}! We'll contact you at ${data.email} to confirm your ${data.service} service appointment.`;
     
-    form.parentNode.insertBefore(successMessage, form);
+    // Insert message at the beginning of the form parent
+    form.parentNode.insertBefore(successMessage, form.parentNode.firstChild);
     
     // Reset form
     form.reset();
     
-    // Remove success message after 5 seconds
+    // Remove success message after duration
     setTimeout(() => {
         successMessage.remove();
-    }, 5000);
+    }, SUCCESS_MESSAGE_DURATION);
     
     // In a real application, you would send this data to a server
     console.log('Booking request:', data);
