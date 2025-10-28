@@ -23,11 +23,21 @@ document.getElementById('bookingForm').addEventListener('submit', function(e) {
         data[key] = value;
     });
     
-    // Display confirmation message
-    alert(`Thank you for your booking request, ${data.name}! We'll contact you at ${data.email} to confirm your ${data.service} service appointment.`);
+    // Create and display success message
+    const form = this;
+    const successMessage = document.createElement('div');
+    successMessage.style.cssText = 'background: #27ae60; color: white; padding: 1rem; border-radius: 5px; margin-top: 1rem; text-align: center;';
+    successMessage.textContent = `Thank you for your booking request, ${data.name}! We'll contact you at ${data.email} to confirm your ${data.service} service appointment.`;
+    
+    form.parentNode.insertBefore(successMessage, form);
     
     // Reset form
-    this.reset();
+    form.reset();
+    
+    // Remove success message after 5 seconds
+    setTimeout(() => {
+        successMessage.remove();
+    }, 5000);
     
     // In a real application, you would send this data to a server
     console.log('Booking request:', data);
@@ -57,7 +67,7 @@ window.addEventListener('scroll', () => {
     });
 });
 
-// Add animation on scroll
+// Add animation on scroll for service cards
 const observerOptions = {
     threshold: 0.1,
     rootMargin: '0px 0px -100px 0px'
@@ -66,17 +76,13 @@ const observerOptions = {
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
+            entry.target.classList.add('fade-in-visible');
         }
     });
 }, observerOptions);
 
 // Observe service cards
 document.querySelectorAll('.service-card').forEach(card => {
-    card.style.opacity = '0';
-    card.style.transform = 'translateY(30px)';
-    card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
     observer.observe(card);
 });
 

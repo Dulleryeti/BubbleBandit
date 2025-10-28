@@ -136,7 +136,14 @@ body {
     border-radius: 10px;
     text-align: center;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.6s ease;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.service-card.fade-in-visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .service-card:hover {
@@ -443,7 +450,6 @@ html {
     }
 }
 
-.service-card,
 .about-content,
 .contact-content {
     animation: fadeInUp 0.6s ease-out;
